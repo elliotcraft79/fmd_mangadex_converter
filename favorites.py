@@ -1,6 +1,5 @@
 import sqlite3
 import re
-import csv
 
 con = sqlite3.connect('favorites.db')
 cur = con.cursor()
@@ -14,6 +13,9 @@ mangadex_favorites = cur.fetchall()
 already_converted = []
 
 for favorite in mangadex_favorites:
+    if re.match(r"d07c9c2425764da8ba056505f57cf40c\/title\/([0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12})", favorite[0]):
+        print(f"{favorite[0]} is already a UUID")
+        continue
     title_match = re.match(r"d07c9c2425764da8ba056505f57cf40c\/title\/(?P<id>\d+)", favorite[0])
     if title_match == None:
         continue

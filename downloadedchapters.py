@@ -1,6 +1,5 @@
 import sqlite3
 import re
-import csv
 
 con = sqlite3.connect('downloadedchapters.db')
 cur = con.cursor()
@@ -14,6 +13,9 @@ mangadex_titles = cur.fetchall()
 already_converted = []
 
 for title in mangadex_titles:
+    if re.match(r"d07c9c2425764da8ba056505f57cf40c\/title\/([0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12})", title[0]):
+        print(f"{title[0]} is already a UUID")
+        continue
     title_match = re.match(r"d07c9c2425764da8ba056505f57cf40c\/title\/(?P<id>\d+)", title[0])
     if title_match == None:
         continue

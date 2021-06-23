@@ -1,6 +1,5 @@
 import sqlite3
 import re
-import csv
 
 con = sqlite3.connect('downloads.db')
 cur = con.cursor()
@@ -14,6 +13,9 @@ downloads = cur.fetchall()
 already_converted = []
 
 for download in downloads:
+    if re.match(r"\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b", download[8]):
+        print(f"{download[8]} is already a UUID")
+        continue
     title_match = re.match(r"\/title\/(?P<id>\d+)", download[8])
     if title_match == None:
         print('no title match')
