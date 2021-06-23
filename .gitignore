@@ -1,0 +1,4 @@
+*.csv
+favorites.db
+downloads.db
+downloadedchapters.db
